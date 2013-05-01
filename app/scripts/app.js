@@ -4,18 +4,17 @@ define([
     ,'underscore'
     ,'vq'
     ,'queue'
-    ,'url',
+    ,'url'
     ,'scatterplot'
     ], 
-function ($, _, vq, queue, url, scatterplot) {
+function ($, _, vq, queue, URL, scatterplot) {
     'use strict';
 
-  var options = {
-            "dataset" : "gbm_2013_pub_tumor_only"
-           
-        };
+    var options = {
+        "dataset" : "gbm_2013_pub_tumor_only"
+    };
 
-var Application = {
+  var Application = {
   
     initialize: function() {
         var url = new URL(window.location);

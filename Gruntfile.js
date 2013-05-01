@@ -167,6 +167,7 @@ module.exports = function (grunt) {
             dist: {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
                 options: {
+                    logLevel: 0,
                     // `name` and `out` is set by grunt-usemin
                     baseUrl: 'app/scripts',
                     optimize: 'none',
@@ -270,7 +271,8 @@ module.exports = function (grunt) {
                         '*.{ico,txt}',
                         '.htaccess',
                         'images/{,*/}*.{webp,gif}',
-                        'styles/fonts/*'
+                        'styles/fonts/*',
+                        'data/*.json'
                     ]
                 }]
             }
@@ -297,7 +299,7 @@ module.exports = function (grunt) {
                 exclude: ['modernizr']
             },
             all: {
-                rjsConfig: '<%= yeoman.app %>/scripts/main.js'
+                rjsConfig: '<%= yeoman.app %>/scripts/config.js'
             }
         },
   	proxy : {
@@ -320,7 +322,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean:server',
             'concurrent:server',
-	    'proxy',
+	       'proxy',
             'livereload-start',
             'connect:livereload',
             'open',
