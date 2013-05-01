@@ -1,0 +1,48 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>&micro;!</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- build:js scripts/vendor/modernizr.js -->
+        <script src="components/modernizr/modernizr.js"></script>
+        <!-- endbuild -->
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row-fluid">
+            <div class="well">
+                <h2>&micro;RNA - RPPA</h2>
+                <p>What's the story with &micro;?</p>
+            </div>
+        </div>
+       </div>
+        <div class="container">
+            <div class="row">
+                <div class="span2">
+                    <button id="btn-toggle-brush" class="btn btn-info">Brush</button><br/><br/>
+                    <button id="btn-toggle-zoom" class="btn btn-info">Zoom</button>
+                </div>
+                <div class="span8">
+                    <div id="scatterplot">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- build:js scripts/main.js -->
+        <script data-main="scripts/config" src="components/requirejs/require.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
