@@ -3,14 +3,50 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 @import 'sass-bootstrap/lib/bootstrap';
 
+@mixin labels {
+    font-size : 14px;
+    font-family: sans-serif;
+}
+
+body {
+    @include labels;
+}
+
+text.axis {
+    @include labels;
+}
+.y-tick text {
+    @include labels;
+}
+.x-tick text  {
+     @include labels;
+}
+.axis .domain {
+    stroke-width: 1px;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #555;
+    shape-rendering: crispEdges;
+}
+
 .hero-unit {
     margin: 50px auto 0 auto;
     width: 300px;
 }
 
-#corr_scatterplot { 
-    width:100%;
+.main_scatterplot { 
+    width:500px;
     height:400px;
+}
+
+.side_scatterplot {
+    width:250px;
+    height:200px;
+    margin-left:40px;
+    margin-bottom:100px;
 }
 
 .extent {
