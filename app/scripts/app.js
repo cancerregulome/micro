@@ -56,13 +56,17 @@ function populateScatterplots(data) {
 
         data_array = data_array.filter(function(obj) { return _.isFinite(obj["RPPA"] + obj[type]);});
 
+        var tooltip_obj = {};
+        tooltip_obj[x_label] = type;
+        tooltip_obj[rppa_label] = 'RPPA';
+
          var feature_sp =  new vq.ScatterPlot();  
          var plot_data = {
                     DATATYPE : "vq.models.ScatterPlotData",
                     CONTENTS : {
                         PLOT : {
                             container: document.getElementById(type.toLowerCase() + "_scatterplot"),
-                            width : 380, height: 240,
+                            width : 300, height: 250,
                             dblclick_notifier : function() {},
                             vertical_padding : 80,
                             horizontal_padding: 100,
@@ -80,9 +84,7 @@ function populateScatterplots(data) {
                         ycolumnid: type,
                         xcolumnid: 'RPPA',
                         valuecolumnid: 'id',
-                        tooltip_items : {
-                           
-                         },
+                        tooltip_items : tooltip_obj,
                         tooltip_timeout : 200,
                         ycolumnlabel: x_label,
                         xcolumnlabel: rppa_label,
@@ -105,7 +107,7 @@ function populateScatterplots(data) {
                     CONTENTS : {
                         PLOT : {
                             container: document.getElementById("corr_scatterplot"),
-                            width : 600, height: 450,
+                            width : 500, height: 400,
                             dblclick_notifier : function() {},
                             vertical_padding : 80,
                             horizontal_padding: 100,
