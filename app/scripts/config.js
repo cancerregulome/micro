@@ -4,6 +4,7 @@ require.config({
 
   paths: {
       jquery: '../components/jquery/jquery',
+      "jQuery-ui": "../components/jquery-ui/ui/jquery-ui",
       bootstrap: 'vendor/bootstrap',
       url : '../components/url-js/url',
       d3: '../components/d3/d3',
@@ -15,17 +16,20 @@ require.config({
       scatterplot : '../components/visquick/vq.scatterplot'
   },
   shim: {
-      jquery : { exports : '$'},
        'underscore' : {
           'exports' : '_'
       },
-       'd3' : {
+      "jQuery-ui" : {
+          "deps": ["jquery"],
+          "exports" : "$"
+      },
+      d3 : {
           'exports' : 'd3'
       },
-       'queue' : {
+      queue : {
           'exports' : 'queue'
       },
-      'url' : {
+      url : {
           'deps' : ['underscore'],
           'exports' : 'URL'
       },
@@ -41,7 +45,7 @@ require.config({
 
 });
 
-require(['app', 'jquery'], function (app, $) {
+require(['app', 'jquery', 'jQuery-ui'], function (app, $) {
     'use strict';
     app.initialize();
 });

@@ -128,13 +128,13 @@ function populateScatterplots(data) {
                         tooltip_items : {
                             Gene : 'GEXP',
                             Protein : 'RPPA',
-                            uRNA : 'MIRN',
+                            miRNA : 'MIRN',
                             'Gene Corr' : 'gexp_corr',
-                            'uRNA Corr' : 'mirn_corr'
+                            'miRNA Corr' : 'mirn_corr'
                          },
                         tooltip_timeout : 200,
                         ycolumnlabel: 'GEXP<->RPPA Correlation',
-                        xcolumnlabel: 'uRNA<->RPPA Correlation',
+                        xcolumnlabel: 'miRNA<->RPPA Correlation',
                         brush_handler: function(d) {
                             console.log(d);
                         },
@@ -157,7 +157,9 @@ function populateScatterplots(data) {
         .defer(d3.json, "data/gbm-pub2013.json")
         .await( function (err, points) {
             drawCorrelationScatterplot(points);
+            $('#highlight').autocomplete({source: _.pluck(points,'GEXP')});
         });
+
 
         
 

@@ -17,15 +17,30 @@
     </head>
     <body>
         <nav>
-        
             <div class="navbar navbar-fixed-top">
                 <div class="navbar-inner">
-<div class="container">
-                <div class="brand">&micro;</div>
+                    <div class="container ">
+                    <div class="brand pull-left">&micro;</div>
+                    <div class="ui-widget">
+                        <label for="highlight">Gene Label: </label>
+                        <input id="highlight" />
+                    </div>
+                    </div>
+                </div>
             </div>
+        </nav>
+        <div class="container" style="margin-top:80px">
+            <div class="row">
+                <div class="well collapse">
+                    Drag : Brush <br>
+                    Shift + Drag : Pan the plot<br>
+                    Mousewheel : Zoom<br>
+                    Click (data) : Select Gene, Protein, &micro;RNA<br>
+                    Click (plot) : Remove brush<br>
+                    <a href="#" class="btn close" data-toggle="collapse"></a>
+                </div>
             </div>
         </div>
-        </nav>
         <div class="container">
             <div class="row">
                 <div class="span8">

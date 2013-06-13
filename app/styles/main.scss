@@ -135,3 +135,36 @@ text.axis {
     color:rgb(240,10,10);
     cursor:pointer;
 }
+
+
+//********* Autocomplete
+
+.ui-autocomplete {
+  width:100%;
+  max-height: 120px;
+  max-width: 300px;
+  font-size:11px;
+  background-color: white;
+    overflow-y: auto; /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+}
+.ui-helper-hidden {
+  display: none;
+}
+.ui-helper-hidden-accessible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+* html .ui-autocomplete {
+    height: 100px;
+}
+//***************
