@@ -3,3 +3,6 @@ dist
 .tmp
 .sass-cache
 app/components
+app/data
+python
+proxy.json
