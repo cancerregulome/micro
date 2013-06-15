@@ -3,17 +3,17 @@ require.config({
   baseUrl: 'scripts',
 
   paths: {
-      jquery: '../components/jquery/jquery',
-      "jQuery-ui": "../components/jquery-ui/ui/jquery-ui",
+      jquery: '../bower_components/jquery/jquery',
+      "jQuery-ui": "../bower_components/jquery-ui/ui/jquery-ui",
       bootstrap: 'vendor/bootstrap',
-      url : '../components/url-js/url',
-      d3: '../components/d3/d3',
-      modernizr: '../components/modernizr',
-      queue: '../components/queue-async/queue',
-      underscore: '../components/underscore/underscore',
-      // science : '../components/science/science.v1',
-      vq : '../components/visquick/vq',
-      scatterplot : '../components/visquick/vq.scatterplot'
+      url : '../bower_components/url-js/url',
+      d3: '../bower_components/d3/d3',
+      modernizr: '../bower_components/modernizr',
+      queue: '../bower_components/queue-async/queue',
+      underscore: '../bower_components/underscore/underscore',
+      // science : '../bower_components/science/science.v1',
+      vq : '../bower_components/visquick/vq',
+      scatterplot : '../bower_components/visquick/vq.scatterplot'
   },
   shim: {
        'underscore' : {
