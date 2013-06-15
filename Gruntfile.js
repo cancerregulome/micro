@@ -164,16 +164,20 @@ module.exports = function (grunt) {
             dist: {},
             server: {
                 options: {
-                    logLevel: 0,
                     debugInfo: true
                 }
             }
         },
         // not used since Uglify task does concat,
         // but still available if needed
-        /*concat: {
-            dist: {}
-        },*/
+        concat: {
+            dist: {
+		files: {
+			'<%= yeoman.dist %>/styles/main.css': ['<%= yeoman.dist %>/styles/{,*/}*.css','.tmp/styles/{,*/}*.css' ]
+		}
+           }
+        },
+
         requirejs: {
             dist: {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
@@ -356,8 +360,8 @@ module.exports = function (grunt) {
         'useminPrepare',
         'concurrent:dist',
         'requirejs',
-        'cssmin',
         'concat',
+        'cssmin',
         'uglify',
         'copy',
         'rev',
