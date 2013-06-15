@@ -40,12 +40,16 @@ require.config({
       'scatterplot' : {
           'deps' : ['d3' , 'vq', 'underscore'],
           'exports' : 'scatterplot'
+      },
+      bootstrap : {
+          deps : ['jquery','jQuery-ui'],
+          exports : 'bootstrap'
       }
   }
 
 });
 
-require(['app', 'jquery', 'jQuery-ui'], function (app, $) {
+require(['app', 'jquery', 'jQuery-ui', 'bootstrap'], function (app, $) {
     'use strict';
     app.initialize();
 });
