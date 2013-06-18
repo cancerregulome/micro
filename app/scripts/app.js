@@ -15,6 +15,9 @@ function ($, _, vq, queue, URL, featureScatterPlot, correlationScatterPlot) {
         "dataset" : "gbm_2013_pub_tumor_only"
     };
 
+    var data_points = [],
+        main_plot;
+
 function populateScatterplots(data) {
     var gene = data["GEXP"],
         rppa = data["RPPA"],
@@ -118,7 +121,24 @@ function populateScatterplots(data) {
         $('#helpPanel a.close-help-btn').on('click',  _.debounce(function() { $('#helpPanel').hidePanel(toggleHelpButton) }, 300, true) )
     }
     function addXAxisButtonEvents() {
-
+        $('.xaxis_mapping').on('click','button', function(evt, ui) {
+            var value = $(this).val();
+            if ( value === 'RPPA' ){
+                   correlationScatterPlot({
+                                data_array: data_points,
+                                click_handler: function(d) { populateScatterplots(d); },
+                                color_property : 'mirn_gexp_corr',
+                                xcolumn_id : 'mirn_corr' 
+                                });
+            } else if (value === 'GEXP') {
+                    correlationScatterPlot({
+                                data_array: data_points,
+                                click_handler: function(d) { populateScatterplots(d); },
+                                color_property : 'mirn_corr',
+                                xcolumn_id : 'mirn_gexp_corr' 
+                                });
+            }
+        });
     }
 
     function addElementEvents() {
@@ -138,11 +158,13 @@ function populateScatterplots(data) {
             addElementEvents();
             flashHelpPanel();
             correlationScatterPlot({
-                                data_array: points,
-                                click_handler: function(d) { populateScatterplots(d); }
-                                });
-            $('#highlight').autocomplete({source: _.pluck(points,'GEXP')});
-
+                data_array: points,
+                click_handler: function(d) { populateScatterplots(d); },
+                color_property : 'mirn_gexp_corr',
+                xcolumn_id : 'mirn_corr' 
+            });
+            $('#highlight').autocomplete({source: _.pluck(data_points,'GEXP')});
+            data_points = points;
         });
 
     }

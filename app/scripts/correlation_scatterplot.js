@@ -1,16 +1,22 @@
 define([
     'scatterplot'
-], function(scatterplot) {
+    ,'jquery'
+], function(scatterplot, $) {
 
     return function drawCorrelationScatterplot (config) {
             var __ = {
                 data_array: [],
                 click_handler : function() {},
                 brush_handler : function() {},
-                color_property : 'mirn_corr' 
+                color_property : 'mirn_gexp_corr',
+                xcolumn_id : 'mirn_corr',
+                xcolumnlabel: 'miRNA <-> RPPA Correlation'
             };
 
             $.extend(__, config);
+
+            var $container = $("#corr_scatterplot"),
+            container = $container.get(0);
 
             var divergentColorScale = ['#D7191C', '#FFFFBF', '#2B83BA']; //peach, yellow, green
 
@@ -19,15 +25,17 @@ define([
                 return linearScale(data[__.color_property]);
             }
 
+            $container.html("");
+
             var corr_sp =  new vq.ScatterPlot();
 
             var plot_data = {
                 DATATYPE : "vq.models.ScatterPlotData",
                 CONTENTS : {
                     PLOT : {
-                        container: document.getElementById("corr_scatterplot"),
+                        container: container,
                         width : 500, height: 400,
-                        vertical_padding : 80,
+                        vertical_padding : 40,
                         horizontal_padding: 100,
                         x_label_displacement: 40,
                         y_label_displacement: -70,
@@ -40,18 +48,19 @@ define([
                     radius: 3,
                     regression: 'none',
                     ycolumnid: 'gexp_corr',
-                    xcolumnid: 'mirn_corr',
+                    xcolumnid: __.xcolumn_id,
                     valuecolumnid: 'id',
                     tooltip_items : {
                         Gene : 'GEXP',
                         Protein : 'RPPA',
                         miRNA : 'MIRN',
-                        'Gene Corr' : 'gexp_corr',
-                        'miRNA Corr' : 'mirn_corr'
+                        'RPPA/Gene Corr' : 'gexp_corr',
+                        'RPPA/miRNA Corr' : 'mirn_corr',
+                        'Gene/miRNA Corr' : 'gexp_mirn_corr'
                      },
                     tooltip_timeout : 200,
-                    ycolumnlabel: 'GEXP<->RPPA Correlation',
-                    xcolumnlabel: 'miRNA<->RPPA Correlation',
+                    ycolumnlabel: 'GEXP <-> RPPA Correlation',
+                    xcolumnlabel: __.xcolumnlabel
                 }
             };
 
