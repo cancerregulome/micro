@@ -6,3 +6,4 @@ app/components
 app/data
 python
 proxy.json
+app/bower_components

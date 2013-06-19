@@ -9,7 +9,10 @@
     "url-js": "~1.0.2",
     "hbs": "~0.4.0",
     "queue-async": "~1.0.4",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "d3": "~3.2.0",
+    "jquery-ui": "~1.10.3",
+    "jquery-ui-bootstrap": "~0.2.5"
   },
   "devDependencies": {}
 }
