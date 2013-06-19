@@ -128,14 +128,16 @@ function populateScatterplots(data) {
                                 data_array: data_points,
                                 click_handler: function(d) { populateScatterplots(d); },
                                 color_property : 'mirn_gexp_corr',
-                                xcolumn_id : 'mirn_corr' 
+                                xcolumn_id : 'mirn_corr',
+                                xcolumnlabel: 'miRNA <-> RPPA Correlation'
                                 });
             } else if (value === 'GEXP') {
                     correlationScatterPlot({
                                 data_array: data_points,
                                 click_handler: function(d) { populateScatterplots(d); },
                                 color_property : 'mirn_corr',
-                                xcolumn_id : 'mirn_gexp_corr' 
+                                xcolumn_id : 'mirn_gexp_corr',
+                                xcolumnlabel: 'miRNA <-> GEXP Correlation'
                                 });
             }
         });
@@ -161,7 +163,8 @@ function populateScatterplots(data) {
                 data_array: points,
                 click_handler: function(d) { populateScatterplots(d); },
                 color_property : 'mirn_gexp_corr',
-                xcolumn_id : 'mirn_corr' 
+                xcolumn_id : 'mirn_corr',
+                xcolumnlabel: 'miRNA <-> RPPA Correlation'
             });
             $('#highlight').autocomplete({source: _.pluck(data_points,'GEXP')});
             data_points = points;
