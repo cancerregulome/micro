@@ -18,10 +18,11 @@ define([
             var $container = $("#corr_scatterplot"),
             container = $container.get(0);
 
-            var divergentColorScale = ['#ee0404', '#FFFF11', '#2B33CC']; //peach, yellow, green
+            var divergentColorScale = ['#2B33CC', '#FFFF11', '#ee0404']; //peach, yellow, green
             var color_data = _.pluck(__.data_array,__.color_property);
             var domain = d3.extent(color_data);
-            domain.splice(1,0,d3.median(color_data));
+            if (domain[0] < 0 && domain[1] > 0)  { domain.splice(1,0,0); }
+            else  { domain.splice(1,0,d3.median(color_data)); }
 
             linearScale = d3.scale.linear().domain(domain).range(divergentColorScale),
             colorDataFn = function colorPoint(data) {
@@ -59,7 +60,7 @@ define([
                         miRNA : 'MIRN',
                         'RPPA/Gene Corr' : 'gexp_corr',
                         'RPPA/miRNA Corr' : 'mirn_corr',
-                        'Gene/miRNA Corr' : 'gexp_mirn_corr'
+                        'Gene/miRNA Corr' : 'mirn_gexp_corr'
                      },
                     tooltip_timeout : 200,
                     ycolumnlabel: 'GEXP <-> RPPA Correlation',
@@ -79,8 +80,16 @@ define([
                 range = linearScale.range(),
                 width = $(selection).width() || 200,
                 height = $(selection).height() || 20,
-                bar_scale = d3.scale.linear().domain(domain).range([0,width/2,width]),
-                $canvas = $('<canvas>').attr({id:'correlation_legend',width:width, height:height});
+                padding = {top:0, bottom:0, left:15, right:15};
+
+                innerWidth = width - padding.left - padding.right;
+                innerHeight = height - padding.top - padding.bottom;
+
+                bar_scale = d3.scale.linear().domain(domain).range([0,innerWidth/2,innerWidth]).clamp(true),
+                $canvas = $('<canvas>')
+                                .attr({id:'correlation_legend'})
+                                .attr({width:innerWidth, height:innerHeight})
+                                .css({"padding-left": padding.left + 'px'});
 
                 var canvas = $canvas.get(0);
                 $(selection).empty();
@@ -88,21 +97,22 @@ define([
                 $(selection).append(canvas);  
                 
                 var ctx = canvas.getContext("2d");
-                ctx.clearRect(0, 0, width, height);
+                ctx.clearRect(0, 0, innerWidth, innerHeight);
 
-                var grad = ctx.createLinearGradient(0,0, width,0);
+                var grad = ctx.createLinearGradient(0,0, innerWidth,0);
                 grad.addColorStop(0,range[0]);
                 grad.addColorStop(0.5,range[1]);
                 grad.addColorStop(1,range[2]);
 
-                ctx.rect(0, 0, width, height);
+                ctx.rect(0, 0, innerWidth, innerHeight);
                 ctx.fillStyle=grad;
                 ctx.fill();
 
                 var color_axis = d3.svg.axis()
                                     .orient('bottom')
-                                    .ticks(5)
-                                    .tickSize(6, 0, 6)
+                                    .ticks(3)
+                                    .tickSize(6, 6, 0)
+                                    .tickFormat(d3.format('0.1f'))
                                     .scale(bar_scale);
 
                 d3.select(selection).append('svg')
@@ -110,6 +120,7 @@ define([
                     .attr('height',30)
                 .append('g')
                     .attr('class','x axis')
+                    .attr('transform','translate('+padding.left +',0)')
                     .call(color_axis);
 
             };

@@ -45,7 +45,7 @@ return function drawFeatureScatterplot (config) {
                         PLOT : {
                             container: document.getElementById(type.toLowerCase() + "_scatterplot"),
                             width : 300, height: 250,
-                            vertical_padding : 80,
+                            vertical_padding : 40,
                             horizontal_padding: 100,
                             x_label_displacement: 40,
                             y_label_displacement: -70,
