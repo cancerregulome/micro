@@ -170,13 +170,13 @@ module.exports = function (grunt) {
         },
         // not used since Uglify task does concat,
         // but still available if needed
-        concat: {
-            dist: {
-		files: {
-			'<%= yeoman.dist %>/styles/main.css': ['<%= yeoman.dist %>/styles/{,*/}*.css','.tmp/styles/{,*/}*.css' ]
-		}
-           }
-        },
+  //       concat: {
+  //           dist: {
+		// files: {
+		// 	'<%= yeoman.dist %>/styles/main.css': ['<%= yeoman.dist %>/styles/{,*/}*.css','.tmp/styles/{,*/}*.css' ]
+		// }
+  //          }
+  //       },
 
         requirejs: {
             dist: {

@@ -2,17 +2,16 @@
   "name": "micro",
   "version": "0.0.0",
   "dependencies": {
-    "sass-bootstrap": "~2.3.0",
     "requirejs": "~2.1.4",
     "modernizr": "~2.6.2",
-    "jquery": "~1.9.1",
+    "jquery": "~2.0.2",
     "url-js": "~1.0.2",
     "hbs": "~0.4.0",
     "queue-async": "~1.0.4",
     "underscore": "~1.4.4",
     "d3": "~3.2.0",
     "jquery-ui": "~1.10.3",
-    "jquery-ui-bootstrap": "~0.2.5"
-  },
-  "devDependencies": {}
+    "jquery-ui-bootstrap": "~0.2.5",
+    "sass-bootstrap": "~2.3.2"
+  }
 }

@@ -7,3 +7,4 @@ app/data
 python
 proxy.json
 app/bower_components
+npm-debug.log
