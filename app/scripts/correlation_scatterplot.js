@@ -75,12 +75,14 @@ define([
 
             sp.corr_sp.draw(plot_data);
 
-            sp.legend = function(selection) {
+            sp.legend = function(selection, label) {
                 var domain = linearScale.domain(),
                 range = linearScale.range(),
                 width = $(selection).width() || 200,
                 height = $(selection).height() || 20,
-                padding = {top:0, bottom:0, left:15, right:15};
+                padding = {top:0, bottom:0, left:15, right:15},
+                $canvas, canvas, ctx, grad, color_axis,
+                selection, colorscale_selector;
 
                 innerWidth = width - padding.left - padding.right;
                 innerHeight = height - padding.top - padding.bottom;
@@ -91,15 +93,21 @@ define([
                                 .attr({width:innerWidth, height:innerHeight})
                                 .css({"padding-left": padding.left + 'px'});
 
-                var canvas = $canvas.get(0);
+                canvas = $canvas.get(0);
                 $(selection).empty();
+
+                $('<div>').css({"display":'inline-block', "text-align":'center', width: '250px'}).html(label).appendTo(selection);
+
+                $('<div>').addClass('colorscale').css({display:'inline-block', width: '250px'}).appendTo(selection);
                 
-                $(selection).append(canvas);  
+                colorscale_selector = selection + ' div.colorscale';
+
+                $(colorscale_selector).append(canvas);  
                 
-                var ctx = canvas.getContext("2d");
+                ctx = canvas.getContext("2d");
                 ctx.clearRect(0, 0, innerWidth, innerHeight);
 
-                var grad = ctx.createLinearGradient(0,0, innerWidth,0);
+                grad = ctx.createLinearGradient(0,0, innerWidth,0);
                 grad.addColorStop(0,range[0]);
                 grad.addColorStop(0.5,range[1]);
                 grad.addColorStop(1,range[2]);
@@ -108,14 +116,14 @@ define([
                 ctx.fillStyle=grad;
                 ctx.fill();
 
-                var color_axis = d3.svg.axis()
+                color_axis = d3.svg.axis()
                                     .orient('bottom')
                                     .ticks(3)
                                     .tickSize(6, 6, 0)
                                     .tickFormat(d3.format('0.1f'))
                                     .scale(bar_scale);
 
-                d3.select(selection).append('svg')
+                d3.select(colorscale_selector).append('svg')
                     .attr('width',width)
                     .attr('height',30)
                 .append('g')
