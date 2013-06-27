@@ -18,6 +18,8 @@ function ($, _, vq, queue, URL, featureScatterPlot, correlationScatterPlot) {
     var data_points = [],
         main_plot;
 
+    var csp, xExtent;
+
 function populateScatterplots(data) {
     var gene = data["GEXP"],
         rppa = data["RPPA"],
@@ -124,18 +126,20 @@ function populateScatterplots(data) {
         $('.xaxis_mapping').on('click','button', function(evt, ui) {
             var value = $(this).val();
             if ( value === 'RPPA' ){
-                   correlationScatterPlot({
+                   csp = correlationScatterPlot({
                                 data_array: data_points,
                                 click_handler: function(d) { populateScatterplots(d); },
                                 color_property : 'mirn_gexp_corr',
+                                xscale: xExtent,
                                 xcolumn_id : 'mirn_corr',
                                 xcolumnlabel: 'miRNA <-> RPPA Correlation'
                                 }).legend('#color_legend','miRNA <-> GEXP Correlation');
             } else if (value === 'GEXP') {
-                    correlationScatterPlot({
+                    csp = correlationScatterPlot({
                                 data_array: data_points,
                                 click_handler: function(d) { populateScatterplots(d); },
                                 color_property : 'mirn_corr',
+                                xscale: xExtent,
                                 xcolumn_id : 'mirn_gexp_corr',
                                 xcolumnlabel: 'miRNA <-> GEXP Correlation'
                                 }).legend('#color_legend','miRNA <-> RPPA Correlation');
@@ -146,6 +150,14 @@ function populateScatterplots(data) {
     function addElementEvents() {
         addHelpButtonEvent();
         addXAxisButtonEvents();
+        
+            $('#highlight').on('autocompleteselect', function( event, ui ) {
+                    var data_obj = {};
+                    data_obj[ui.item[0]] = ui.item[1];
+                    csp.corr_sp.highlight(data_obj);
+                    $(this).val(ui.item[1]);
+                    return false;
+                });
     }
 
   var Application = {
@@ -159,14 +171,32 @@ function populateScatterplots(data) {
         .await( function (err, points) {
             addElementEvents();
             flashHelpPanel();
-            correlationScatterPlot({
+            xExtent = d3.extent(_.flatten(_.map(points,function(p) { return [ p['mirn_corr'],p['mirn_gexp_corr']]; })));
+            csp = correlationScatterPlot({
                 data_array: points,
                 click_handler: function(d) { populateScatterplots(d); },
                 color_property : 'mirn_gexp_corr',
                 xcolumn_id : 'mirn_corr',
-                xcolumnlabel: 'miRNA <-> RPPA Correlation'
+                xcolumnlabel: 'miRNA <-> RPPA Correlation',
+                xscale: xExtent
             }).legend('#color_legend','miRNA <-> GEXP Correlation');
-            $('#highlight').autocomplete({source: _.pluck(data_points,'GEXP')});
+
+            $('#highlight').autocomplete({
+                source: _.uniq(
+                                _.flatten(
+                                    _.map(points, function(p) { 
+                                            return _.pairs(_.pick(p, ['GEXP', 'MIRN','RPPA']));
+                                        }), 
+                                    true), function(a) { return a[0] +'' + a[1];} ),
+                minLength: 2,
+                delay: 200
+            })
+            .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+                  return $( "<li>" )
+                    .append(  "<a>" + item[1] + "</a>" )
+                    .appendTo( ul );
+            };
+
             data_points = points;
         });
 

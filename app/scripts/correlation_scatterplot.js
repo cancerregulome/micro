@@ -82,10 +82,10 @@ define([
                 height = $(selection).height() || 20,
                 padding = {top:0, bottom:0, left:15, right:15},
                 $canvas, canvas, ctx, grad, color_axis,
-                selection, colorscale_selector;
+                colorscale_selector;
 
-                innerWidth = width - padding.left - padding.right;
-                innerHeight = height - padding.top - padding.bottom;
+                var innerWidth = width - padding.left - padding.right,
+                    innerHeight = height - padding.top - padding.bottom;
 
                 bar_scale = d3.scale.linear().domain(domain).range([0,innerWidth/2,innerWidth]).clamp(true),
                 $canvas = $('<canvas>')
@@ -130,6 +130,8 @@ define([
                     .attr('class','x axis')
                     .attr('transform','translate('+padding.left +',0)')
                     .call(color_axis);
+
+                return this;
 
             };
 
