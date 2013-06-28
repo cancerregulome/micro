@@ -4,11 +4,10 @@ define([
     ,'underscore'
     ,'vq'
     ,'queue'
-    ,'url'
     ,'feature_scatterplot'
     ,'correlation_scatterplot'
     ], 
-function ($, _, vq, queue, URL, featureScatterPlot, correlationScatterPlot) {
+function ($, _, vq, queue, featureScatterPlot, correlationScatterPlot) {
     'use strict';
 
     var options = {
@@ -163,8 +162,6 @@ function populateScatterplots(data) {
   var Application = {
   
     initialize: function() {
-        var url = new URL(window.location);
-        _.extend(options, url.params);
 
         queue()
         .defer(d3.json, "data/gbm-pub2013.json")
