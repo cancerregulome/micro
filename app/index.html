@@ -37,16 +37,6 @@
                 </div>
             </div>
         </nav>
-        <div class="well container top-panel">
-           X-Axis: miRNA <i class="icon-resize-horizontal"></i>
-               <div class="btn-group xaxis_mapping" data-toggle="buttons-radio">
-                    <button class="btn active" value="RPPA">RPPA</button>
-                    <button class="btn" value="GEXP">GEXP</button>
-              </div>
-              <div style="display:inline-block; height:60px">
-              <div id="color_legend" style="display:inline-block; width:250px; height:20px; margin-left:40px;"></div>
-            </div>
-        </div>
         <div id="helpPanel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="helpPanelLabel" aria-hidden="true">
                  <div class="modal-header">
                       <a type="button" class="close" data-dismiss="modal" aria-hidden="true" href="#"><i class="icon-remove"></i></a>
@@ -60,10 +50,20 @@
                     Click (plot) : Remove brush<br>
                 </div>
         </div>
-        <div class="container">
+        <div id="main_container" class="container">
             <div class="row">
                 <div class="span8">
-                    <div id="corr_scatterplot" class="main_scatterplot"></div>                   
+                    <div id="corr_scatterplot" class="main_scatterplot"></div>
+                    <div class="well scatterplot_controls">
+                        X-Axis: miRNA <i class="icon-resize-horizontal"></i>
+                        <div class="btn-group xaxis_mapping" data-toggle="buttons-radio">
+                            <button class="btn active" value="RPPA">RPPA</button>
+                            <button class="btn" value="GEXP">GEXP</button>
+                        </div>
+                        <div style="display:inline-block; height:60px">
+                            <div id="color_legend" style="display:inline-block; width:250px; height:20px; margin-left:40px;"></div>
+                        </div>
+                    </div>               
                 </div>
                 <div class="span4">
                     <div id="gexp_scatterplot" class="side_scatterplot"></div>
