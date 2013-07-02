@@ -40,9 +40,9 @@ define([
                         container: container,
                         width : 500, height: 400,
                         vertical_padding : 40,
-                        horizontal_padding: 100,
+                        horizontal_padding: 60,
                         x_label_displacement: 40,
-                        y_label_displacement: -70,
+                        y_label_displacement: -40,
                         x_tick_displacement: 20,
                         enable_transitions: true
                     },
