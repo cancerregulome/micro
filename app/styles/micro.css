@@ -11,22 +11,35 @@
     width: 300px;
 }
 
+.main_scatterplot svg {
+  background-color: #FFF;
+  padding-bottom: 20px;
+}
+
 .main_scatterplot { 
+  background-color: #FFF;
     width:500px;
     height:400px;
+    padding-bottom:20px;
+    display:block;
+}
+
+.side_scatterplot svg {
+  background-color: #FFF;
 }
 
 .side_scatterplot {
-    width:250px;
-    height:200px;
     margin-left:40px;
-    margin-bottom:100px;
+    margin-bottom: 20px;
 }
 
 .extent {
     stroke: #fff;
     fill-opacity: .125;
     shape-rendering: crispEdges;
+}
+.top-panel {
+  margin-top: 60px;
 }
 
 /*jquery-ui overrides */

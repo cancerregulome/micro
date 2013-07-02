@@ -47,80 +47,7 @@ function populateScatterplots(data) {
                 + ' limit 1')
           + "&tqx=" + encodeURIComponent('out:json_array'));
   }
-
-        function closeHelpPanel(){
-
-        }
-
-    (function($){ 
-
-         jQuery.fn.showPanel = function(callback) {
-             var o = $(this); 
-               o.show({
-                            effect:'blind',
-                            easing: 'swing',
-                            duration:400,
-                            complete: callback
-                        });
-        };
-
-        jQuery.fn.hidePanel = function(callback) {
-             var o = $(this); 
-             o.hide({
-                    effect:'blind',
-                    easing: 'swing',
-                    duration:400,
-                    complete : callback
-            });
-        };
-
-        jQuery.fn.swingPanel = function(callback, in_and_out, time) { 
-            var time = time || 2000;
-            var in_and_out = false || in_and_out;
-            var callback = callback || noop;
-
-            var o = $(this); 
-            
-            var delay = in_and_out;
-            var completeFunction = in_and_out ? function() { 
-                    o.delay(time)
-                    .hidePanel(callback);
-            } : callback;
-
-            o.showPanel(completeFunction);
-        };
-    })(jQuery);
-
-    function showHelpPanel(callback, doFlash) {
-        var doFlash = doFlash || false;
-        var new_callback = callback || noop;
-
-        if (doFlash) {
-            new_callback = function() {
-                $('#helpPanel a.close-help-btn').show(); 
-                toggleHelpButton(); 
-                callback();
-            };
-            $('#helpPanel a.close-help-btn').hide();
-        }
-        toggleHelpButton();
-        $('#helpPanel').swingPanel(new_callback, doFlash);
-    }
-
-    function flashHelpPanel() {
-        showHelpPanel(noop, true);
-    }
-
-    function noop() { $.noop(); }
-
-    function toggleHelpButton() {
-        $('#helpButton').toggle('highlight');
-    }
-
-    function addHelpButtonEvent() {
-        $('#helpButton').on('click', _.debounce(function() {showHelpPanel(noop, false)}, 300, true) );
-        $('#helpPanel a.close-help-btn').on('click',  _.debounce(function() { $('#helpPanel').hidePanel(toggleHelpButton) }, 300, true) )
-    }
+   
     function addXAxisButtonEvents() {
         $('.xaxis_mapping').on('click','button', function(evt, ui) {
             var value = $(this).val();
@@ -147,7 +74,6 @@ function populateScatterplots(data) {
     }
 
     function addElementEvents() {
-        addHelpButtonEvent();
         addXAxisButtonEvents();
         
             $('#highlight').on('autocompleteselect', function( event, ui ) {
@@ -167,7 +93,6 @@ function populateScatterplots(data) {
         .defer(d3.json, "data/gbm-pub2013.json")
         .await( function (err, points) {
             addElementEvents();
-            flashHelpPanel();
             xExtent = d3.extent(_.flatten(_.map(points,function(p) { return [ p['mirn_corr'],p['mirn_gexp_corr']]; })));
             csp = correlationScatterPlot({
                 data_array: points,
