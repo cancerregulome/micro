@@ -83,6 +83,9 @@ function populateScatterplots(data) {
                     $(this).val(ui.item[1]);
                     return false;
                 });
+            $('form').on('submit', function( event, ui){
+                return false;
+            });
     }
 
   var Application = {
