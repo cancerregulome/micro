@@ -17,7 +17,7 @@ function ($, _, vq, queue, featureScatterPlot, correlationScatterPlot) {
     var data_points = [],
         main_plot;
 
-    var csp, xExtent;
+    var csp, xExtent, yExtent, extent;
 
 function populateScatterplots(data) {
     var gene = data["GEXP"],
@@ -83,9 +83,31 @@ function populateScatterplots(data) {
                     $(this).val(ui.item[1]);
                     return false;
                 });
+            $('#highlight').keypress(function(event) {
+                if (event.keyCode == $.ui.keyCode.ENTER) {
+                    var val = $(this).val();
+                    var entry = $(this).autocomplete('option','source').filter(function(a) { return a[1] === val; } )[0];
+                    var data_obj = {};
+                    data_obj[entry[0]] = entry[1];
+                    csp.corr_sp.highlight(data_obj);
+                    return false;
+                }
+            });
             $('form').on('submit', function( event, ui){
                 return false;
             });
+            $('div.main_scatterplot').disableSelection();
+            $('div.side_scatterplot').disableSelection();
+            $('div.scatterplot_controls').disableSelection();
+    }
+
+    //extendRange([0.1, 0.8], 1) -> [0.]
+    function extendRange(range, percent) {
+        var first = range[0], last = range[range.length-1];
+        var interval = Math.abs(last - first);
+        var extend = interval * (percent / 100) / 2;
+        if (first > last) return [ first + extend, last - extend];
+        return [ first - extend, last + extend];
     }
 
   var Application = {
@@ -96,14 +118,22 @@ function populateScatterplots(data) {
         .defer(d3.json, "data/gbm-pub2013.json")
         .await( function (err, points) {
             addElementEvents();
+
+            //make the x and y axes have identical ranges with (0,0) as the center
             xExtent = d3.extent(_.flatten(_.map(points,function(p) { return [ p['mirn_corr'],p['mirn_gexp_corr']]; })));
+            yExtent = d3.extent(_.pluck(points,'gexp_corr'));
+            extent = d3.extent(xExtent.concat(yExtent));
+            var maxValue = d3.max(extent.map(Math.abs));
+            extent = extendRange([-1*maxValue, maxValue], 3);
+
             csp = correlationScatterPlot({
                 data_array: points,
                 click_handler: function(d) { populateScatterplots(d); },
                 color_property : 'mirn_gexp_corr',
                 xcolumn_id : 'mirn_corr',
                 xcolumnlabel: 'miRNA <-> RPPA Correlation',
-                xscale: xExtent
+                xscale: extent,
+                yscale: extent,
             }).legend('#color_legend','miRNA <-> GEXP Correlation');
 
             $('#highlight').autocomplete({
