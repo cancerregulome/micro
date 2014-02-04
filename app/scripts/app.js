@@ -18,7 +18,7 @@ function ($, _, vq, queue, featureScatterPlot, correlationScatterPlot) {
 
     var datasets = {
         "GBM" : { 
-            "feature_table" : "gbm_2013_pub_tumor_only",
+            "feature_table" : "gbm_2013_pub_tumor_only_features",
             "correlation_data" : "data/gbm-pub2013.json"
         },
         "LGG" : { 
