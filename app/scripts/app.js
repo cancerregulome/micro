@@ -10,14 +10,26 @@ define([
 function ($, _, vq, queue, featureScatterPlot, correlationScatterPlot) {
     'use strict';
 
-    var options = {
-        "dataset" : "gbm_2013_pub_tumor_only"
-    };
 
     var data_points = [],
         main_plot;
 
     var csp, xExtent, yExtent, extent;
+
+    var datasets = {
+        "GBM" : { 
+            "feature_table" : "gbm_2013_pub_tumor_only",
+            "correlation_data" : "data/gbm-pub2013.json"
+        },
+        "LGG" : { 
+            "feature_table" : "lgg_04oct13_seq_features",
+            "correlation_data" : "data/lgg-04oct13.json"
+        }
+    };
+
+    var options = {
+        "dataset" : datasets["GBM"]
+    };
 
 function populateScatterplots(data) {
     var gene = data["GEXP"],
@@ -40,7 +52,7 @@ function populateScatterplots(data) {
   }
 
   function feature_request (label, type, modifier) {
-    return $.ajax("/google-dsapi-svc/addama/datasources/re/gbm_2013_pub_tumor_only_features/query?tq="
+    return $.ajax("/google-dsapi-svc/addama/datasources/re/" + options.dataset.feature_table + "/query?tq="
          + encodeURIComponent('select alias, patient_values where `label` = \'' + 
                 label + '\' and source = \'' +  type + '\'' +
                 (_.isUndefined(modifier) ? '' : ' and label_desc = \'' + modifier + '\' ')
@@ -113,11 +125,13 @@ function populateScatterplots(data) {
   var Application = {
   
     initialize: function() {
+        var self = this;
 
         queue()
-        .defer(d3.json, "data/gbm-pub2013.json")
+        .defer(d3.json, options.dataset.correlation_data )
         .await( function (err, points) {
             addElementEvents();
+            self.addDatasetEvents();
 
             //make the x and y axes have identical ranges with (0,0) as the center
             xExtent = d3.extent(_.flatten(_.map(points,function(p) { return [ p['mirn_corr'],p['mirn_gexp_corr']]; })));
@@ -155,6 +169,15 @@ function populateScatterplots(data) {
             data_points = points;
         });
 
+    },
+
+    addDatasetEvents: function() {
+        var self = this;
+         $('#dataset_selector li a').on('click', function() {
+                var dataset = $(this).attr('id');
+                options.dataset = datasets[dataset] || datasets["GBM"];
+                self.initialize();
+            });
     }
 
 };
